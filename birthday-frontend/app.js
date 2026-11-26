@@ -9,7 +9,7 @@
 // --------------------------------------------------------------------------
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8080'
-  : 'https://birthday-backend-render-url.onrender.com'; // Update this after deploying to Render
+  : 'https://birthday-email-application.onrender.com'; // Update this after deploying to Render
 
 // --------------------------------------------------------------------------
 // 20 Heartwarming Birthday & Life Quotes
