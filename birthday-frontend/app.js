@@ -1,17 +1,10 @@
-/**
- * Birthday Wishes Application — Frontend Script
- * Handles backend health polling, registration submission, dynamic metrics, and theme toggling.
- */
 
-// --------------------------------------------------------------------------
-// 1. Backend URL Configuration
-// When deploying, replace with your Render URL: e.g. "https://birthday-backend-xxxx.onrender.com"
-// --------------------------------------------------------------------------
+
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8080'
   : 'https://birthday-email-application.onrender.com'; // Update this after deploying to Render
 
-// --------------------------------------------------------------------------
+
 // 20 Heartwarming Birthday & Life Quotes
 // Randomly picked on every page visit and refresh!
 // --------------------------------------------------------------------------
