@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I'm Terrible at Remembering Birthdays — So I Built This ♡</title>
-  
+
   <!-- Warm Editorial & Monospace Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- Top Navigation Header -->
@@ -50,7 +54,9 @@
         <span class="highlight-word">So I built a little machine</span> so I never forget yours.
       </h1>
       <p class="hero-desc">
-        Seriously, my memory is like a goldfish. I forget dates, but I truly care about celebrating you. Tell me your special day once, and I'll send a handwritten-vibe cute birthday letter to your inbox every year at 12:00 AM sharp.
+        Seriously, my memory is like a goldfish. I forget dates, but I truly care about celebrating you. Tell me your
+        special day once, and I'll send a handwritten-vibe cute birthday letter to your inbox every year at 12:00 AM
+        sharp.
       </p>
     </section>
 
@@ -68,7 +74,8 @@
         </div>
 
         <p class="card-subtitle">
-          Save your birthday in my memory bank. I’ll send a tiny welcome hello right away, and a sweet celebration letter on your big day!
+          Save your birthday in my memory bank. I’ll send a tiny welcome hello right away, and a sweet celebration
+          letter on your big day!
         </p>
 
         <form id="register-form" novalidate>
@@ -77,15 +84,8 @@
               <span>What should I call you?</span>
               <span class="field-hint ui-mono">your name or nickname</span>
             </label>
-            <input 
-              type="text" 
-              id="username" 
-              name="username" 
-              class="ui-input" 
-              placeholder="e.g. Alex, Maya, or Bharat" 
-              required
-              autocomplete="name"
-            >
+            <input type="text" id="username" name="username" class="ui-input" placeholder="e.g. Alex, Maya, or Bharat"
+              required autocomplete="name">
           </div>
 
           <div class="form-group">
@@ -93,15 +93,8 @@
               <span>Where should I send the wishes?</span>
               <span class="field-hint ui-mono">your email inbox</span>
             </label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              class="ui-input" 
-              placeholder="alex@gmail.com" 
-              required
-              autocomplete="email"
-            >
+            <input type="email" id="email" name="email" class="ui-input" placeholder="alex@gmail.com" required
+              autocomplete="email">
           </div>
 
           <div class="form-row">
@@ -110,28 +103,16 @@
                 <span>Where are you from?</span>
                 <span class="field-hint ui-mono">country</span>
               </label>
-              <input 
-                type="text" 
-                id="country" 
-                name="country" 
-                class="ui-input" 
-                placeholder="India, USA, Japan..." 
-                required
-              >
+              <input type="text" id="country" name="country" class="ui-input" placeholder="India, USA, Japan..."
+                required>
             </div>
 
             <div class="form-group flex-1">
               <label for="dateOfBirth" class="ui-field-label">
-                <span>When is your birthday?</span>
+                <span>Date of Birth:</span>
                 <span class="field-hint ui-mono">Date</span>
               </label>
-              <input 
-                type="date" 
-                id="dateOfBirth" 
-                name="dateOfBirth" 
-                class="ui-input" 
-                required
-              >
+              <input type="date" id="dateOfBirth" name="dateOfBirth" class="ui-input" required>
             </div>
           </div>
 
@@ -149,7 +130,8 @@
         <div id="success-card" class="success-card hidden">
           <div class="success-icon">🎉</div>
           <h3>You're officially locked in!</h3>
-          <p id="success-message">I've saved your birthday into my digital brain and sent a tiny welcome hello to your inbox.</p>
+          <p id="success-message">I've saved your birthday into my digital brain and sent a tiny welcome hello to your
+            inbox.</p>
           <button type="button" id="reset-form-btn" class="ui-button ui-button-secondary">
             Save another friend's birthday
           </button>
@@ -161,7 +143,7 @@
 
         <!-- Confession & Promise Cards -->
         <div class="metrics-grid">
-          
+
           <!-- Card 1: Community / Friends Count -->
           <article class="ui-card ui-card-interactive ui-metric">
             <div class="ui-metric-header">
@@ -202,15 +184,18 @@
           <ul class="workflow-steps">
             <li>
               <span class="step-num">01</span>
-              <div><strong>The Problem:</strong> I get busy and forget calendar dates, then feel guilty for missing your special day.</div>
+              <div><strong>The Problem:</strong> I get busy and forget calendar dates, then feel guilty for missing your
+                special day.</div>
             </li>
             <li>
               <span class="step-num">02</span>
-              <div><strong>The Solution:</strong> Instead of trusting my forgetful brain, this automated mailbox remembers forever.</div>
+              <div><strong>The Solution:</strong> Instead of trusting my forgetful brain, this automated mailbox
+                remembers forever.</div>
             </li>
             <li>
               <span class="step-num">03</span>
-              <div><strong>The Outcome:</strong> You wake up on your birthday knowing you are celebrated and appreciated. Always.</div>
+              <div><strong>The Outcome:</strong> You wake up on your birthday knowing you are celebrated and
+                appreciated. Always.</div>
             </li>
           </ul>
         </div>
@@ -238,4 +223,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

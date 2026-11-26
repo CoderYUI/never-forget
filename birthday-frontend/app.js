@@ -151,7 +151,7 @@ registerForm.addEventListener('submit', async (e) => {
     }
   } catch (error) {
     console.error('Registration network error:', error);
-    showToast('Cannot reach server. If Render is asleep, it may take a moment to wake.', 'error');
+    showToast('Our little birthday bear is still getting dressed for the party. Please try again in a moment!', 'error');
   } finally {
     setSubmitting(false);
   }
