@@ -11,6 +11,33 @@ const BACKEND_URL = window.location.hostname === 'localhost' || window.location.
   ? 'http://localhost:8080'
   : 'https://birthday-backend-render-url.onrender.com'; // Update this after deploying to Render
 
+// --------------------------------------------------------------------------
+// 20 Heartwarming Birthday & Life Quotes
+// Randomly picked on every page visit and refresh!
+// --------------------------------------------------------------------------
+const CUTE_QUOTES = [
+  "Count your life by smiles, not tears. Count your age by friends, not years. ♡",
+  "Every day is a gift, but your birthday is the whole celebration! 🎂",
+  "The world became a little brighter and much sweeter the day you arrived. ✨",
+  "May your year ahead be full of warm hugs, belly laughs, and unexpected joys. 🌸",
+  "You don’t just get older; you get more lovely, kind, and wonderful. ♡",
+  "A tiny reminder: you deserve all the good things today and always. 🍰",
+  "Eat something delicious, make a wild wish, and celebrate being you! 🎀",
+  "Life was made for good friends and sweet birthdays. ☀️",
+  "May your days be sprinkled with extra love, good coffee, and warm sunshine. ☕",
+  "Another trip around the sun, and you're still my favorite reason to celebrate. 🎈",
+  "Growing older is mandatory, but growing up is entirely optional. Stay playful! 🐱",
+  "Birthdays are nature’s gentle way of telling us to eat more cake. 🎂",
+  "Here’s to another year of laughs, warm memories, and making wishes come true. ✨",
+  "You bring so much gentle warmth into this world just by being in it. ♡",
+  "May every candle on your cake turn into a wish that really happens. 🕯️",
+  "Today is about you: take a breath, smile wide, and soak in all the love. 🌷",
+  "Age is merely the number of years the world has been blessed with you. 💫",
+  "Cheers to another year of sweet adventures and unforgettable moments! 🥂",
+  "The best birthdays are the ones surrounded by kindness, smiles, and cake. 🍰",
+  "You are deeply appreciated, endlessly celebrated, and never forgotten. ♡"
+];
+
 // DOM Elements
 const root = document.documentElement;
 const themeToggleBtn = document.getElementById('theme-toggle');
@@ -32,7 +59,15 @@ const resetFormBtn = document.getElementById('reset-form-btn');
 const toastEl = document.getElementById('toast');
 
 // --------------------------------------------------------------------------
-// 2. Theme Switching Logic (Persisted in localStorage)
+// 2. Random Quote Picker (Runs immediately on load)
+// --------------------------------------------------------------------------
+function displayRandomQuote() {
+  const randomIndex = Math.floor(Math.random() * CUTE_QUOTES.length);
+  dailyQuoteEl.textContent = `"${CUTE_QUOTES[randomIndex]}"`;
+}
+
+// --------------------------------------------------------------------------
+// 3. Theme Switching Logic (Persisted in localStorage)
 // --------------------------------------------------------------------------
 function initTheme() {
   const savedTheme = localStorage.getItem('theme');
@@ -61,7 +96,7 @@ function applyTheme(theme) {
 }
 
 // --------------------------------------------------------------------------
-// 3. Backend Health & User Count Polling
+// 4. Backend Health & User Count Polling
 // --------------------------------------------------------------------------
 async function checkBackendHealth() {
   try {
@@ -82,7 +117,7 @@ async function checkBackendHealth() {
         userCountEl.textContent = data.totalUsers.toLocaleString();
       }
 
-      // Update Daily Cute Quote
+      // If backend sends a random quote, use it
       if (data.quote) {
         dailyQuoteEl.textContent = `"${data.quote}"`;
       }
@@ -97,7 +132,7 @@ async function checkBackendHealth() {
 }
 
 // --------------------------------------------------------------------------
-// 4. Registration Form Submission
+// 5. Registration Form Submission
 // --------------------------------------------------------------------------
 registerForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -151,7 +186,7 @@ registerForm.addEventListener('submit', async (e) => {
     }
   } catch (error) {
     console.error('Registration network error:', error);
-    showToast('Our little birthday bear is still getting dressed for the party. Please try again in a moment!', 'error');
+    showToast('Cannot reach server. If Render is asleep, it may take a moment to wake.', 'error');
   } finally {
     setSubmitting(false);
   }
@@ -176,7 +211,7 @@ function setSubmitting(isSubmitting) {
 }
 
 // --------------------------------------------------------------------------
-// 5. Toast Notification System
+// 6. Toast Notification System
 // --------------------------------------------------------------------------
 let toastTimer = null;
 function showToast(message, type = 'info') {
@@ -191,10 +226,11 @@ function showToast(message, type = 'info') {
 }
 
 // --------------------------------------------------------------------------
-// 6. Application Initialization
+// 7. Application Initialization
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  displayRandomQuote(); // Pick an instant random quote on load
   checkBackendHealth();
 
   // Poll health every 30 seconds while the page stays open
