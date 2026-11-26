@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I'm Terrible at Remembering Birthdays — So I Built This ♡</title>
+  
+  <!-- Warm Editorial & Monospace Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="ui-header">
+    <div class="ui-container header-inner">
+      <div class="brand">
+        <span class="brand-symbol">🎂</span>
+        <span class="brand-title">never<span class="accent-text">/</span>forget</span>
+        <span class="ui-badge-tiny">by bhaskar</span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Friendly Memory Status Pill -->
+        <div id="backend-status" class="ui-status ui-status-live" title="Checking my memory bank...">
+          <span class="pulse-dot"></span>
+          <span id="status-text">Warming up memory...</span>
+        </div>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button id="theme-toggle" class="ui-button ui-button-secondary" type="button" aria-label="Toggle theme">
+          <span id="theme-icon">◐</span>
+          <span id="theme-label" class="ui-mono">Theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="ui-container main-layout">
+
+    <!-- Hero Section: Honest, Cute & Relatable -->
+    <section class="hero-section">
+      <div class="ui-label">AN HONEST CONFESSION &nbsp;♡</div>
+      <h1 class="hero-title">
+        I’m terrible at remembering birthdays.<br>
+        <span class="highlight-word">So I built a little machine</span> so I never forget yours.
+      </h1>
+      <p class="hero-desc">
+        Seriously, my memory is like a goldfish. I forget dates, but I truly care about celebrating you. Tell me your special day once, and I'll send a handwritten-vibe cute birthday letter to your inbox every year at 12:00 AM sharp.
+      </p>
+    </section>
+
+    <!-- Content Workspace Grid -->
+    <div class="workspace-grid">
+
+      <!-- Left Column: Registration Card -->
+      <section class="ui-card registration-card">
+        <div class="card-header">
+          <div>
+            <span class="ui-label">NEVER FORGET ME</span>
+            <h2 class="card-title">Add your special day</h2>
+          </div>
+          <span class="card-icon">💌</span>
+        </div>
+
+        <p class="card-subtitle">
+          Save your birthday in my memory bank. I’ll send a tiny welcome hello right away, and a sweet celebration letter on your big day!
+        </p>
+
+        <form id="register-form" novalidate>
+          <div class="form-group">
+            <label for="username" class="ui-field-label">
+              <span>What should I call you?</span>
+              <span class="field-hint ui-mono">your name or nickname</span>
+            </label>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="ui-input" 
+              placeholder="e.g. Alex, Maya, or Bharat" 
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="ui-field-label">
+              <span>Where should I send the wishes?</span>
+              <span class="field-hint ui-mono">your email inbox</span>
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="ui-input" 
+              placeholder="alex@gmail.com" 
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="country" class="ui-field-label">
+                <span>Where are you from?</span>
+                <span class="field-hint ui-mono">country</span>
+              </label>
+              <input 
+                type="text" 
+                id="country" 
+                name="country" 
+                class="ui-input" 
+                placeholder="India, USA, Japan..." 
+                required
+              >
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="dateOfBirth" class="ui-field-label">
+                <span>When is your birthday?</span>
+                <span class="field-hint ui-mono">Date</span>
+              </label>
+              <input 
+                type="date" 
+                id="dateOfBirth" 
+                name="dateOfBirth" 
+                class="ui-input" 
+                required
+              >
+            </div>
+          </div>
+
+          <button type="submit" id="submit-btn" class="ui-button ui-button-primary submit-btn">
+            <span id="btn-text">Lock In My Birthday &nbsp;♡</span>
+            <span id="btn-loader" class="loader hidden"></span>
+          </button>
+
+          <p class="form-footnote ui-mono">
+            ✦ An instant cute welcome note will be sent &nbsp;•&nbsp; No spam, only love
+          </p>
+        </form>
+
+        <!-- Dynamic Success Feedback Card -->
+        <div id="success-card" class="success-card hidden">
+          <div class="success-icon">🎉</div>
+          <h3>You're officially locked in!</h3>
+          <p id="success-message">I've saved your birthday into my digital brain and sent a tiny welcome hello to your inbox.</p>
+          <button type="button" id="reset-form-btn" class="ui-button ui-button-secondary">
+            Save another friend's birthday
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Cute Story & Warm Cards -->
+      <aside class="sidebar-column">
+
+        <!-- Confession & Promise Cards -->
+        <div class="metrics-grid">
+          
+          <!-- Card 1: Community / Friends Count -->
+          <article class="ui-card ui-card-interactive ui-metric">
+            <div class="ui-metric-header">
+              <span class="ui-mono">MEMORIES STORED</span>
+              <span class="ui-status ui-status-info ui-mono">Protected</span>
+            </div>
+            <div id="user-count" class="ui-metric-value">--</div>
+            <div class="ui-metric-detail">Birthdays I will never forget again ♡</div>
+          </article>
+
+          <!-- Card 2: The Midnight Promise -->
+          <article class="ui-card ui-card-interactive ui-metric">
+            <div class="ui-metric-header">
+              <span class="ui-mono">THE PROMISE</span>
+              <span class="ui-status ui-status-success ui-mono">Every Year</span>
+            </div>
+            <div class="ui-metric-value text-base ui-mono">12:00 AM IST</div>
+            <div class="ui-metric-detail">Wishes arrive right as your day begins</div>
+          </article>
+
+          <!-- Card 3: Daily Heartwarming Quote -->
+          <article class="ui-card quote-card">
+            <div class="quote-header">
+              <span class="ui-label">A LITTLE LOVE NOTE</span>
+              <span class="quote-icon">✨</span>
+            </div>
+            <blockquote id="daily-quote" class="quote-text">
+              "Count your life by smiles, not tears. Count your age by friends, not years. ♡"
+            </blockquote>
+            <div class="quote-author ui-mono">a tiny thought for you today</div>
+          </article>
+
+        </div>
+
+        <!-- The Story Box -->
+        <div class="ui-card info-box">
+          <div class="info-title ui-mono">🐱 WHY THIS EXISTS</div>
+          <ul class="workflow-steps">
+            <li>
+              <span class="step-num">01</span>
+              <div><strong>The Problem:</strong> I get busy and forget calendar dates, then feel guilty for missing your special day.</div>
+            </li>
+            <li>
+              <span class="step-num">02</span>
+              <div><strong>The Solution:</strong> Instead of trusting my forgetful brain, this automated mailbox remembers forever.</div>
+            </li>
+            <li>
+              <span class="step-num">03</span>
+              <div><strong>The Outcome:</strong> You wake up on your birthday knowing you are celebrated and appreciated. Always.</div>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification Popups -->
+  <div id="toast" class="ui-toast hidden" role="alert"></div>
+
+  <!-- Footer -->
+  <footer class="ui-footer">
+    <div class="ui-container footer-inner">
+      <div class="footer-left ui-mono">
+        MADE WITH A LITTLE EXTRA LOVE &nbsp;♡&nbsp; <strong>Bhaskar Ojha</strong>
+      </div>
+      <div class="footer-right ui-mono">
+        <span>Never miss a birthday again.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
