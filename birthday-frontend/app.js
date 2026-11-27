@@ -167,11 +167,10 @@ registerForm.addEventListener('submit', async (e) => {
 
       // Show Success View
       registerForm.classList.add('hidden');
-      successMessage.textContent = `Yay ${username}! I've locked your birthday (${dateOfBirth}) into my memory and sent a welcome hello note to ${email}. 
-      
+      successMessage.innerHTML = `Yay ${username}! I've locked your birthday (${dateOfBirth}) into my memory and sent a welcome hello note to ${email}. <br><br>
       You will never be forgotten!
-    
-      P.S. If you don't see the email, check your spam folder. Apparently some inboxes aren't ready for this level of friendship. 🙄`;
+      <br><br>
+      <b>P.S.</b> If you don't see the email, check your spam folder. Apparently some inboxes aren't ready for this level of friendship. 🙄`;
       successCard.classList.remove('hidden');
 
       // Refresh memory counter
