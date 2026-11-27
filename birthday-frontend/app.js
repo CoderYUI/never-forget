@@ -219,12 +219,101 @@ function showToast(message, type = 'info') {
 }
 
 // --------------------------------------------------------------------------
-// 7. Application Initialization
+// 7. Dynamic Countries Loader (CORS-Friendly via countries.dev & CDN Fallback)
+// --------------------------------------------------------------------------
+async function loadCountries() {
+  const countrySelect = document.getElementById('country');
+  if (!countrySelect) return;
+
+  let countries = [];
+
+  // 1. Try countries.dev API
+  try {
+    const response = await fetch('https://countries.dev/countries?fields=name,flag&limit=300&sort=name&order=asc');
+    if (response.ok) {
+      countries = await response.json();
+    }
+  } catch (err) {
+    console.warn('countries.dev fetch issue, trying CDN fallback...', err.message);
+  }
+
+  // 2. Open CORS CDN backup (jsDelivr guaranteed Access-Control-Allow-Origin: *)
+  if (!countries || countries.length === 0) {
+    try {
+      const response = await fetch('https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json');
+      if (response.ok) {
+        const raw = await response.json();
+        countries = raw.map(c => ({ name: c.name, flag: c.emoji }));
+      }
+    } catch (err) {
+      console.warn('CDN fetch issue:', err.message);
+    }
+  }
+
+  // 3. Populate dropdown if data is retrieved
+  if (countries && countries.length > 0) {
+    const normalized = countries.map(c => {
+      const name = typeof c.name === 'object' ? (c.name.common || c.name.official) : c.name;
+      const flag = c.flag || c.emoji || '';
+      return { name, flag };
+    }).filter(c => c.name);
+
+    normalized.sort((a, b) => a.name.localeCompare(b.name));
+
+    countrySelect.innerHTML = '<option value="" disabled selected>Select country</option>';
+
+    // Add Popular Group
+    const popularNames = ['India', 'United States', 'United Kingdom', 'Canada', 'Australia', 'Germany'];
+    const popularGroup = document.createElement('optgroup');
+    popularGroup.label = '⭐ Popular';
+
+    normalized
+      .filter(c => popularNames.includes(c.name))
+      .forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.name;
+        opt.textContent = `${c.flag ? c.flag + ' ' : ''}${c.name}`;
+        popularGroup.appendChild(opt);
+      });
+    countrySelect.appendChild(popularGroup);
+
+    // Add All Countries (A-Z)
+    const allGroup = document.createElement('optgroup');
+    allGroup.label = 'All Countries (A-Z)';
+
+    normalized.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.name;
+      opt.textContent = `${c.flag ? c.flag + ' ' : ''}${c.name}`;
+      allGroup.appendChild(opt);
+    });
+    countrySelect.appendChild(allGroup);
+    return;
+  }
+
+  // 4. Clean Offline Fallback
+  const fallback = [
+    'India 🇮🇳', 'United States 🇺🇸', 'United Kingdom 🇬🇧', 'Canada 🇨🇦',
+    'Australia 🇦🇺', 'Germany 🇩🇪', 'France 🇫🇷', 'Japan 🇯🇵', 'Singapore 🇸🇬',
+    'United Arab Emirates 🇦🇪', 'Other'
+  ];
+  countrySelect.innerHTML = '<option value="" disabled selected>Select country</option>';
+  fallback.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name.replace(/\s[^\s]+$/, '');
+    opt.textContent = name;
+    countrySelect.appendChild(opt);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 8. Application Initialization
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   displayRandomQuote(); // Pick an instant random quote on load
   checkBackendHealth();
+  loadCountries();      // Dynamically populate all 250+ countries via API
 
   // Poll health every 30 seconds while the page stays open
   setInterval(checkBackendHealth, 30000);

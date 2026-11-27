@@ -118,8 +118,9 @@
                 <span>Where are you from?</span>
                 <span class="field-hint ui-mono">country</span>
               </label>
-              <input type="text" id="country" name="country" class="ui-input" placeholder="India, USA, Japan..."
-                required>
+              <select id="country" name="country" class="ui-input" required>
+                <option value="" disabled selected>Loading countries...</option>
+              </select>
             </div>
 
             <div class="form-group flex-1">
