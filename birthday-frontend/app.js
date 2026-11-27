@@ -103,7 +103,7 @@ async function checkBackendHealth() {
 
       // Update Header Status Pill
       backendStatusEl.className = 'ui-status ui-status-live ui-status-success';
-      statusTextEl.textContent = 'Memory bank ready ♡';
+      statusTextEl.textContent = 'Systems Ready';
 
       // Update Total Registered Birthdays
       if (data.totalUsers !== undefined) {
@@ -120,7 +120,7 @@ async function checkBackendHealth() {
   } catch (error) {
     console.warn('Backend ping:', error.message);
     backendStatusEl.className = 'ui-status ui-status-warning';
-    statusTextEl.textContent = 'Waking up memory...';
+    statusTextEl.textContent = 'Waking the System..';
   }
 }
 
@@ -167,7 +167,8 @@ registerForm.addEventListener('submit', async (e) => {
 
       // Show Success View
       registerForm.classList.add('hidden');
-      successMessage.textContent = `Yay ${username}! I've locked your birthday (${dateOfBirth}) into my memory and sent a welcome hello note to ${email}. You will never be forgotten!`;
+      successMessage.textContent = `Yay ${username}! I've locked your birthday (${dateOfBirth}) into my memory and sent a welcome hello note to ${email}. You will never be forgotten!
+      P.S. If you don't see the email, check your spam folder. Apparently some inboxes aren't ready for this level of friendship. 🙄`;;
       successCard.classList.remove('hidden');
 
       // Refresh memory counter
@@ -179,7 +180,7 @@ registerForm.addEventListener('submit', async (e) => {
     }
   } catch (error) {
     console.error('Registration network error:', error);
-    showToast('Cannot reach server. If Render is asleep, it may take a moment to wake.', 'error');
+    showToast('Cannot reach server. Please try again after sometime... 😭', 'error');
   } finally {
     setSubmitting(false);
   }
