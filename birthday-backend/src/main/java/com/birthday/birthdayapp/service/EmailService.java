@@ -39,7 +39,7 @@ public class EmailService {
         }
 
         String htmlContent = template.replace("{{username}}", username);
-        return sendViaAppsScript(toEmail, "Thank you for joining us! ♡", htmlContent);
+        return sendViaAppsScript(toEmail, "Thank you for joining us!", htmlContent);
     }
 
     /**
@@ -53,7 +53,7 @@ public class EmailService {
         }
 
         String htmlContent = template.replace("{{username}}", username);
-        return sendViaAppsScript(toEmail, "Happy Birthday! 🎂 ♡", htmlContent);
+        return sendViaAppsScript(toEmail, "Happy Birthday! 🎂", htmlContent);
     }
 
     /**
@@ -67,8 +67,7 @@ public class EmailService {
 
             String jsonPayload = String.format(
                     "{\"to\":\"%s\",\"subject\":\"%s\",\"htmlBody\":\"%s\"}",
-                    toEmail, escapedSubject, escapedHtml
-            );
+                    toEmail, escapedSubject, escapedHtml);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(scriptUrl))
@@ -83,7 +82,8 @@ public class EmailService {
                 System.out.println("Email sent successfully to: " + toEmail);
                 return true;
             } else {
-                System.err.println("Google Apps Script responded with code " + response.statusCode() + ": " + response.body());
+                System.err.println(
+                        "Google Apps Script responded with code " + response.statusCode() + ": " + response.body());
                 return false;
             }
 
@@ -112,7 +112,8 @@ public class EmailService {
      * Minimal JSON escaping for strings
      */
     private String escapeJson(String input) {
-        if (input == null) return "";
+        if (input == null)
+            return "";
         return input.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
                 .replace("\b", "\\b")
