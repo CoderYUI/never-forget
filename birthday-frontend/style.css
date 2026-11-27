@@ -79,7 +79,9 @@
 }
 
 /* Base Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -105,7 +107,9 @@ a {
   text-decoration: none;
 }
 
-button, input, select {
+button,
+input,
+select {
   font: inherit;
 }
 
@@ -227,8 +231,15 @@ button, input, select {
 }
 
 @keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(2.2); opacity: 0; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
 }
 
 .ui-status-success {
@@ -347,8 +358,15 @@ button, input, select {
 }
 
 @keyframes gentle-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
 .hero-title {
@@ -691,8 +709,15 @@ select.ui-input option {
 }
 
 @keyframes slide-up {
-  from { transform: translateY(16px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Spinner Loader */
@@ -707,8 +732,13 @@ select.ui-input option {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .hidden {
@@ -734,6 +764,10 @@ select.ui-input option {
 
 .footer-left strong {
   color: var(--text-primary);
+}
+
+#successMessage {
+  white-space: pre-line;
 }
 
 /* ==========================================================================
@@ -774,7 +808,8 @@ select.ui-input option {
   }
 
   .ui-badge-tiny {
-    display: none; /* Hide tiny badge to avoid crowding */
+    display: none;
+    /* Hide tiny badge to avoid crowding */
   }
 
   .header-actions {
@@ -787,7 +822,8 @@ select.ui-input option {
   }
 
   #theme-label {
-    display: none; /* Show only icon on mobile button */
+    display: none;
+    /* Show only icon on mobile button */
   }
 
   .ui-button-secondary {
@@ -821,7 +857,8 @@ select.ui-input option {
 
   /* Cards on Mobile */
   .ui-card {
-    padding: 20px 16px; /* Reduced padding so inputs have full room */
+    padding: 20px 16px;
+    /* Reduced padding so inputs have full room */
   }
 
   .card-title {
@@ -899,6 +936,7 @@ select.ui-input option {
     text-align: center;
     gap: 8px;
   }
+
 }
 
 /* Small Handhelds (Screens <= 380px) */
@@ -908,7 +946,8 @@ select.ui-input option {
   }
 
   .ui-status #status-text {
-    display: none; /* Just pulse dot on ultra narrow screens */
+    display: none;
+    /* Just pulse dot on ultra narrow screens */
   }
 
   .ui-status {
