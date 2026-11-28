@@ -15,15 +15,16 @@ import java.time.Duration;
 @Service
 public class EmailService {
 
-    @Value("${app.email.script-url}")
-    private String scriptUrl;
+    @Value("${resend.api.key}")
+    private String resendApiKey;
+
+    @Value("${resend.from.email}")
+    private String fromEmail;
 
     private final HttpClient httpClient;
 
     public EmailService() {
-        // HttpClient configured to follow 302 redirects from Google Apps Script
         this.httpClient = HttpClient.newBuilder()
-                .followRedirects(HttpClient.Redirect.ALWAYS)
                 .connectTimeout(Duration.ofSeconds(15))
                 .build();
     }
@@ -39,7 +40,7 @@ public class EmailService {
         }
 
         String htmlContent = template.replace("{{username}}", username);
-        return sendViaAppsScript(toEmail, "Thank you for joining us!", htmlContent);
+        return sendViaResend(toEmail, "Thank you for joining us!", htmlContent);
     }
 
     /**
@@ -53,24 +54,26 @@ public class EmailService {
         }
 
         String htmlContent = template.replace("{{username}}", username);
-        return sendViaAppsScript(toEmail, "Happy Birthday! 🎂", htmlContent);
+        return sendViaResend(toEmail, "Happy Birthday! 🎂", htmlContent);
     }
 
     /**
-     * Core method to dispatch JSON payload to Google Apps Script
+     * Core method to dispatch JSON payload directly to Resend REST API (Port 443)
      */
-    public boolean sendViaAppsScript(String toEmail, String subject, String htmlContent) {
+    public boolean sendViaResend(String toEmail, String subject, String htmlContent) {
         try {
-            // Escape JSON characters in HTML content
             String escapedHtml = escapeJson(htmlContent);
             String escapedSubject = escapeJson(subject);
+            String escapedFrom = escapeJson(fromEmail);
 
+            // Resend API expects: {"from": "...", "to": ["email"], "subject": "...", "html": "..."}
             String jsonPayload = String.format(
-                    "{\"to\":\"%s\",\"subject\":\"%s\",\"htmlBody\":\"%s\"}",
-                    toEmail, escapedSubject, escapedHtml);
+                    "{\"from\":\"%s\",\"to\":[\"%s\"],\"subject\":\"%s\",\"html\":\"%s\"}",
+                    escapedFrom, toEmail, escapedSubject, escapedHtml);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(scriptUrl))
+                    .uri(URI.create("https://api.resend.com/emails"))
+                    .header("Authorization", "Bearer " + resendApiKey.trim())
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload, StandardCharsets.UTF_8))
                     .timeout(Duration.ofSeconds(20))
@@ -79,16 +82,15 @@ public class EmailService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
-                System.out.println("Email sent successfully to: " + toEmail);
+                System.out.println("Resend: Email sent successfully to " + toEmail + " -> " + response.body());
                 return true;
             } else {
-                System.err.println(
-                        "Google Apps Script responded with code " + response.statusCode() + ": " + response.body());
+                System.err.println("Resend API error [" + response.statusCode() + "]: " + response.body());
                 return false;
             }
 
         } catch (Exception e) {
-            System.err.println("Failed to send email to " + toEmail + ": " + e.getMessage());
+            System.err.println("Failed to send email to " + toEmail + " via Resend: " + e.getMessage());
             return false;
         }
     }
@@ -112,8 +114,7 @@ public class EmailService {
      * Minimal JSON escaping for strings
      */
     private String escapeJson(String input) {
-        if (input == null)
-            return "";
+        if (input == null) return "";
         return input.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
                 .replace("\b", "\\b")
